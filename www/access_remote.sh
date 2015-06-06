@@ -39,6 +39,19 @@ function change {
     echo 0 > /sys/devices/virtual/gpio/gpio23/value
 }
 
+function create_lock {
+    if ! [ -e /tmp/access_remote.lock ]; then
+	touch /tmp/access_remote.lock
+    else
+	echo "The script is allready running. Please try it later again"
+	exit 1
+    fi
+}
+
+function remove_lock {
+    rm /tmp/access_remote.lock
+}
+
 
 # check number of arguments
 if [ $# -ne 2 ]; then
@@ -60,6 +73,9 @@ if ! [[ $2 =~ $re ]]; then
    exit 1
 fi
 
+
+# lock to prevent from multiple execution
+create_lock
 
 # execute the required actions
 power_off
@@ -83,3 +99,5 @@ elif [[ "$1" == "close" ]]; then
 fi
 
 sleep 5
+
+remove_lock

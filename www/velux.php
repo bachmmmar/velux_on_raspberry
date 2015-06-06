@@ -1,10 +1,4 @@
-
-
 <?php
-
-/*
-# string shell_exec ( string $cmd )
-*/
 
 
 // get the current file name
@@ -42,6 +36,12 @@ function printInfo() {
 	echo "</ul><br>";
 }
 
+function write_log($logline) {
+	 $myFile = "remote_log.txt";
+	 $fh = fopen($myFile, 'a') or die("can't open file");
+	 fwrite($fh, $logline);
+	 fclose($fh);
+}
 
 /*************************************************************
  * Check input parameter                                     *
@@ -70,11 +70,13 @@ for ($act = 0; $act < sizeof($action_array); $act++) {
 // check device
 $valid_device = False;
 $nr_of_changes = 0;
+$device_name = "";
 for ($dev = 0; $dev < sizeof($device_array); $dev++) {
     if (strcmp($device, $device_array[$dev][1]) == 0){
        // string match
        $valid_device = True;
        $nr_of_changes = $device_array[$dev][2];
+       $device_name = $device_array[$dev][0];
     }
 }
 
@@ -82,8 +84,14 @@ for ($dev = 0; $dev < sizeof($device_array); $dev++) {
 // decide if everything is valid
 if ($valid_device && $valid_action){
    // everything valid
-   echo "nr of clicks: " . $nr_of_changes . "<br>";
-   echo "action: " . $action;
+   echo "Everything Valid. Sending:<br>";
+
+   $date_str = date('Y-m-d H:i:s');
+   write_log($date_str . " - " . $device_name . " - " . $action . "\n");
+
+   $exec_cmd = getcwd() . "/access_remote.sh " . $action . " " . $nr_of_changes . " > /dev/null &";
+   echo $exec_cmd;
+   exec($exec_cmd);
 }
 else{
    // not all parameters are valid
