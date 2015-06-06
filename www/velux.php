@@ -34,6 +34,7 @@ function printInfo() {
 	}
 
 	echo "</ul><br>";
+	echo "<a href='remote_log.txt'>View Logfile</a>";
 }
 
 function write_log($logline) {

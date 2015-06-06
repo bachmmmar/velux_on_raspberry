@@ -27,9 +27,13 @@ checkSuccess $? "Build and Install Wiring Pi"
 
 popd > /dev/null
 
+# add www user to gpio group
+adduser www-data gpio
+checkSuccess $? "Add www user to gpio group"
+
 # move GPIO Setup script to  init.d folder
 cp gpio_access_rights /etc/init.d/gpio_access_rights
-checkSuccess $? "Could not move GPIO setup to init.d"
+checkSuccess $? "Move GPIO setup to init.d"
 
 pushd /etc/init.d > /dev/null
 checkSuccess $? "Move to init.d"

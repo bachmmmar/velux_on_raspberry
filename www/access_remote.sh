@@ -1,9 +1,15 @@
 #!/bin/bash
 
 
+
+function remove_lock {
+    rm /tmp/access_remote.lock
+}
+
 function check {
 if [ $1 -ne 0 ]; then
      echo $2
+     remove_lock
      exit 1
 fi
 }
@@ -46,10 +52,6 @@ function create_lock {
 	echo "The script is allready running. Please try it later again"
 	exit 1
     fi
-}
-
-function remove_lock {
-    rm /tmp/access_remote.lock
 }
 
 
