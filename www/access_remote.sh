@@ -100,6 +100,7 @@ elif [[ "$1" == "close" ]]; then
     close_action
 fi
 
-sleep 5
+# wait until the command has finished
+sleep 40
 
 remove_lock
