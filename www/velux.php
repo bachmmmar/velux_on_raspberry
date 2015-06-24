@@ -8,9 +8,12 @@ $this_file =  basename($_SERVER["SCRIPT_FILENAME"], '.php') . ".php";
 // "Device Name", "Device identifier", "Number of Steps"
 $device_array = array
 	   (
-	   array("All Windows", "window_all", 1),
-	   array("Window North", "window_north", 2),
-	   array("Window South", "window_south", 0)
+	   array("All Windows", "window_all", 4),
+	   array("Window North", "window_north", 5),
+	   array("Window South", "window_south", 0),
+	   array("All Blindfolds", "blind_all", 1),
+	   array("Blindfold North", "blind_north", 2),
+	   array("Blindfold South", "blind_south", 3)
 	   );
 
 // create the action array
@@ -35,6 +38,8 @@ function printInfo() {
 
 	echo "</ul><br>";
 	echo "<a href='remote_log.txt'>View Logfile</a>";
+
+	
 }
 
 function write_log($logline) {
@@ -90,7 +95,7 @@ if ($valid_device && $valid_action){
    $date_str = date('Y-m-d H:i:s');
    write_log($date_str . " - " . $device_name . " - " . $action . "\n");
 
-   $exec_cmd = getcwd() . "/access_remote.sh " . $action . " " . $nr_of_changes . " > /dev/null &";
+   $exec_cmd = getcwd() . "/access_remote_tsp.sh " . $action . " " . $nr_of_changes;
    echo $exec_cmd;
    exec($exec_cmd);
 }

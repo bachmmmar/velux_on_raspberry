@@ -14,6 +14,10 @@ fi
 apt-get install -y apache2 php5
 checkSuccess $? "Install Apache and PHP"
 
+# install taskspooler
+apt-get install -y task-spooler
+checkSuccess $? "Install task-spooler"
+
 # Install Wiring Pi
 pushd /tmp > /dev/null
 checkSuccess $? "Change to temp dir"
@@ -49,6 +53,9 @@ popd > /dev/null
 # move scripts to www dir
 cp ../www/access_remote.sh /var/www/access_remote.sh
 checkSuccess $? "Move remote control access script to www dir"
+
+cp ../www/access_remote_tsp.sh /var/www/access_remote_tsp.sh
+checkSuccess $? "Move remote control access script for taskspooler to www dir"
 
 cp ../www/velux.php /var/www/velux.php 
 checkSuccess $? "Move php site to www dir"
