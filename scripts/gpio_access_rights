@@ -72,7 +72,7 @@ do_stop()
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
 
-	echo "There is nothing to be stoped"
+	echo "There is nothing to be stopped"
 
 	return 0
 }
